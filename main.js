@@ -1,0 +1,1 @@
+document.getElementById("input-form").addEventListener("click",(e=>{e.preventDefault();const t=document.getElementById("location");createApi(t)}));
