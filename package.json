@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Leon-Mbegera/Weather-App/issues"
   },
-  "homepage": "https://github.com/Leon-Mbegera/Weather-App#readme"
+  "homepage": "https://github.com/Leon-Mbegera/Weather-App#readme",
+  "devDependencies": {
+    "webpack": "^5.52.0",
+    "webpack-cli": "^4.8.0"
+  }
 }
