@@ -1,1 +1,1 @@
-document.getElementById("input-form").addEventListener("click",(e=>{e.preventDefault();const t=document.getElementById("location");createApi(t)}));
+(()=>{document.getElementById("input-form").addEventListener("click",(t=>{t.preventDefault();const n=document.getElementById("location").value;console.log(n),e(n)}));const e=e=>{}})();
