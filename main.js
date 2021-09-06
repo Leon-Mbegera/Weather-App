@@ -1,1 +1,1 @@
-(()=>{document.getElementById("input-form").addEventListener("click",(t=>{t.preventDefault();const n=document.getElementById("location").value;console.log(n),e(n)}));const e=e=>{}})();
+(()=>{document.getElementById("input-form").addEventListener("submit",(e=>{e.preventDefault();const a=document.getElementById("location").value;t(a)}));const t=t=>{e("https://api.openweathermap.org/data/2.5/weather?q="+t+"&APPID=3ac2771651cac45621767706203925fe")},e=async t=>{const e=await fetch(t),a=await e.json();console.log(a)}})();
