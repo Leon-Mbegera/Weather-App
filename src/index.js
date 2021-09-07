@@ -1,5 +1,6 @@
 const form = document.getElementById('input-form');
 const weatherData = document.getElementById('weather-data');
+let convert = false;
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const location = document.getElementById('location').value;
@@ -28,8 +29,9 @@ const getWeather = async (realUrl) => {
 };
 
 const getTempAndOthers = (conditions) => {
-  let temp = conditions.main.temp;
-  let skyline = conditions.weather[0]["description"];
+  let temp = (conditions.main.temp) - 273;
+  const skyline = conditions.weather[0]["description"];
+  display(temp, skyline);
   return [temp, skyline];
 };
 
@@ -41,8 +43,31 @@ const fetchGiphy = async (skyline) => {
   iframe.setAttribute('src', giphy.data.embed_url);
 };
 
-const display = (temp) => {
-  const displayTemp = document.getElementById('temp');
-  displayTemp.innerHTML = temp;
-  weatherData.append(displayTemp);
-}
+const display = (temp, skyline) => {
+  const displayTemp = document.querySelector('#temperature');
+  const displaySky = document.querySelector('#sky');
+  displayTemp.textContent = temp;
+  displaySky.textContent = skyline;
+  weatherData.append(displayTemp, displaySky);
+  toggleTemp(temp, skyline);
+};
+
+
+const toggleTemp = (temp, skyline, conditions) => {
+  const btn = document.querySelector('.toggleBtn');
+  btn.innerHTML = "Convert";
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if(convert == false) {
+      temp = ((temp) * 1.8) + 32;
+      console.log(temp, 'from celsius to farenheit')
+      convert = true;
+    } else{
+      temp = (conditions.main.temp) - 273;
+      convert = false;
+    }
+    display(temp, skyline);
+  });
+  weatherData.append(btn);
+  
+};
