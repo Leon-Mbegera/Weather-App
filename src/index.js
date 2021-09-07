@@ -11,7 +11,8 @@ const createApi = (location) => {
   const realUrl = defaultUrl + location + "&APPID=3ac2771651cac45621767706203925fe";
   getWeather(realUrl)
     .then(conditions => {
-      getTemp(conditions);
+      console.log(conditions);
+      getTempAndOthers(conditions);
     }).catch(err => {
       console.error(err);
   });
@@ -24,6 +25,8 @@ const getWeather = async (realUrl) => {
   return conditions;
 };
 
-const getTemp = (conditions) => {
-  const temp = conditions.main.temp;
+const getTempAndOthers = (conditions) => {
+  let temp = conditions.main.temp;
+  let clouds = conditions.weather[0]["description"];
+  return [temp, clouds];
 };
