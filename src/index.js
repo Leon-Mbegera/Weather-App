@@ -1,4 +1,5 @@
 const form = document.getElementById('input-form');
+const weatherData = document.getElementById('weather-data');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const location = document.getElementById('location').value;
@@ -39,3 +40,9 @@ const fetchGiphy = async (skyline) => {
   const iframe = document.getElementById('giphyId');
   iframe.setAttribute('src', giphy.data.embed_url);
 };
+
+const display = (temp) => {
+  const displayTemp = document.getElementById('temp');
+  displayTemp.innerHTML = temp;
+  weatherData.append(displayTemp);
+}
