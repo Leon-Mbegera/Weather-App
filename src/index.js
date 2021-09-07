@@ -6,16 +6,20 @@ form.addEventListener('submit', (e) => {
 });
 
 const createApi = (location) => {
+
   const defaultUrl = "https://api.openweathermap.org/data/2.5/weather?q=";
   const realUrl = defaultUrl + location + "&APPID=3ac2771651cac45621767706203925fe";
-  getWeather(realUrl);
+  getWeather(realUrl)
+    .then(conditions => {
+      console.log(conditions);
+    }).catch(err => {
+      console.error(err);
+  });
 };
 
 const getWeather = async (realUrl) => {
 
   const response = await fetch(realUrl);
   const conditions = await response.json();
-  console.log(conditions);
+  return conditions;
 };
-
-
