@@ -3,6 +3,7 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   const location = document.getElementById('location').value;
   createApi(location);
+  fetchGiphy();
 });
 
 const createApi = (location) => {
@@ -27,6 +28,14 @@ const getWeather = async (realUrl) => {
 
 const getTempAndOthers = (conditions) => {
   let temp = conditions.main.temp;
-  let clouds = conditions.weather[0]["description"];
-  return [temp, clouds];
+  let skyline = conditions.weather[0]["description"];
+  return [temp, skyline];
+};
+
+const fetchGiphy = async (skyline) => {
+  const response = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=EE5yfxyw3zulUNXYsVkOAtVgrlzAqqJr&s=' + skyline);
+  const giphy = await response.json();
+  console.log(giphy);
+  const iframe = document.getElementById('giphyId');
+  iframe.setAttribute('src', giphy.data.embed_url);
 };
