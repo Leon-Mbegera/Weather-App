@@ -41,12 +41,7 @@ const createApi = async (location) => {
   const realUrl = `${defaultUrl + location}&APPID=3ac2771651cac45621767706203925fe`;
   const response = await fetch(realUrl);
   const conditions = response.json();
-  conditions.then((conditions) => {
-    console.log(conditions);
-    getTempAndOthers(conditions);
-  }).catch((err) => {
-    console.error(err);
-  });
+  conditions.then((conditions) => getTempAndOthers(conditions));
 };
 
 form.addEventListener('submit', (e) => {
