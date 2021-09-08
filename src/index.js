@@ -2,27 +2,26 @@ const form = document.getElementById('input-form');
 const weatherData = document.getElementById('weather-data');
 let convert = false;
 let temp = 0;
+
+const createApi = (location) => {
+  const defaultUrl = 'https://api.openweathermap.org/data/2.5/weather?q=';
+  const realUrl = `${defaultUrl + location}&APPID=3ac2771651cac45621767706203925fe`;
+  getWeather(realUrl)
+    .then((conditions) => {
+      (conditions);
+      getTempAndOthers(conditions);
+    }).catch((err) => {
+      console.error(err);
+    });
+};
+
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const location = document.getElementById('location').value;
   createApi(location);
 });
 
-const createApi = (location) => {
-
-  const defaultUrl = "https://api.openweathermap.org/data/2.5/weather?q=";
-  const realUrl = defaultUrl + location + "&APPID=3ac2771651cac45621767706203925fe";
-  getWeather(realUrl)
-    .then(conditions => {
-      (conditions);
-      getTempAndOthers(conditions);
-    }).catch(err => {
-      console.error(err);
-  });
-};
-
 const getWeather = async (realUrl) => {
-
   const response = await fetch(realUrl);
   const conditions = await response.json();
   return conditions;
@@ -30,7 +29,7 @@ const getWeather = async (realUrl) => {
 
 const getTempAndOthers = (conditions) => {
   temp = Math.floor((conditions.main.temp) - 273);
-  let skyline = conditions.weather[0]["description"]
+  const skyline = conditions.weather[0].description;
   display(temp, skyline);
   fetchGiphy(skyline);
   return [temp, skyline];
@@ -49,11 +48,11 @@ const display = (temp, skyline) => {
   const btn = document.querySelector('.toggleBtn');
   const unit = document.querySelector('.unit');
   if (convert == false) {
-    btn.innerHTML = "Convert to Farhrenheit";
-    unit.innerHTML = ` &deg;C`; 
+    btn.innerHTML = 'Convert to Farhrenheit';
+    unit.innerHTML = ' &deg;C';
   } else {
-    btn.innerHTML = "Convert to Celsius";
-    unit.innerHTML = ` &deg;F`; 
+    btn.innerHTML = 'Convert to Celsius';
+    unit.innerHTML = ' &deg;F';
   }
   displayTemp.textContent = temp;
   displaySky.textContent = skyline;
@@ -73,4 +72,3 @@ btn.addEventListener('click', (e) => {
   }
   display(temp);
 });
-
