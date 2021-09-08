@@ -8,3 +8,8 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
+iframe {
+  overflow-y: hidden;
+  overflow-x: hidden;
+}

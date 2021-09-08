@@ -29,7 +29,7 @@ const getWeather = async (realUrl) => {
 };
 
 const getTempAndOthers = (conditions) => {
-  temp = (conditions.main.temp) - 273;
+  temp = Math.floor((conditions.main.temp) - 273);
   let skyline = conditions.weather[0]["description"]
   display(temp, skyline);
   fetchGiphy(skyline);
@@ -39,38 +39,38 @@ const getTempAndOthers = (conditions) => {
 const fetchGiphy = async (skyline) => {
   const response = await fetch(`https://g.tenor.com/v1/search?q=${skyline}&key=ONCEBFE5IF6H&limit=4`);
   const giphy = await response.json();
-  (giphy);
   const iframe = document.getElementById('giphyId');
   iframe.setAttribute('src', giphy.results[0].media[0].gif.url);
 };
 
-const display = (temp, skyline, toggleTemp) => {
+const display = (temp, skyline) => {
   const displayTemp = document.querySelector('#temperature');
   const displaySky = document.querySelector('#sky');
   const btn = document.querySelector('.toggleBtn');
-  btn.innerHTML = "Convert";
+  const unit = document.querySelector('.unit');
+  if (convert == false) {
+    btn.innerHTML = "Convert to Farhrenheit";
+    unit.innerHTML = ` &deg;C`; 
+  } else {
+    btn.innerHTML = "Convert to Celsius";
+    unit.innerHTML = ` &deg;F`; 
+  }
   displayTemp.textContent = temp;
   displaySky.textContent = skyline;
+  displayTemp.appendChild(unit);
   weatherData.append(displayTemp, btn, displaySky);
 };
 
 const btn = document.querySelector('.toggleBtn');
-btn.innerHTML = "Convert";
 btn.addEventListener('click', (e) => {
   e.preventDefault();
   if (convert == false) {
-    temp = ((temp) * 1.8) + 32;
+    temp = Math.floor(((temp) * 1.8) + 32);
     convert = true;
   } else {
-    temp = ((temp) - 32) / 1.8;
+    temp = Math.floor(((temp) - 32) / 1.8);
     convert = false;
   }
-  (temp);
   display(temp);
 });
 
-const displayAfterConvertion = (toggleTemp) => {
-  const displayTemp = document.querySelector('#temperature');
-  displayTemp.innerHTML = toggleTemp();
-  weatherData.append(displayTemp);
-};
