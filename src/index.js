@@ -6,7 +6,6 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   const location = document.getElementById('location').value;
   createApi(location);
-  fetchGiphy();
 });
 
 const createApi = (location) => {
@@ -15,7 +14,7 @@ const createApi = (location) => {
   const realUrl = defaultUrl + location + "&APPID=3ac2771651cac45621767706203925fe";
   getWeather(realUrl)
     .then(conditions => {
-      console.log(conditions);
+      (conditions);
       getTempAndOthers(conditions);
     }).catch(err => {
       console.error(err);
@@ -31,18 +30,18 @@ const getWeather = async (realUrl) => {
 
 const getTempAndOthers = (conditions) => {
   temp = (conditions.main.temp) - 273;
-  let skyline = conditions.weather[0]["description"].split(" ")
-  skyline = skyline[skyline.length - 1];
+  let skyline = conditions.weather[0]["description"]
   display(temp, skyline);
+  fetchGiphy(skyline);
   return [temp, skyline];
 };
 
 const fetchGiphy = async (skyline) => {
-  const response = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=EE5yfxyw3zulUNXYsVkOAtVgrlzAqqJr&s='+'weather+'+skyline);
+  const response = await fetch(`https://g.tenor.com/v1/search?q=${skyline}&key=ONCEBFE5IF6H&limit=4`);
   const giphy = await response.json();
-  console.log(giphy);
+  (giphy);
   const iframe = document.getElementById('giphyId');
-  iframe.setAttribute('src', giphy.data.embed_url);
+  iframe.setAttribute('src', giphy.results[0].media[0].gif.url);
 };
 
 const display = (temp, skyline, toggleTemp) => {
@@ -62,13 +61,11 @@ btn.addEventListener('click', (e) => {
   if (convert == false) {
     temp = ((temp) * 1.8) + 32;
     convert = true;
-    console.log(convert);
   } else {
     temp = ((temp) - 32) / 1.8;
     convert = false;
-    console.log(convert);
   }
-  console.log(temp);
+  (temp);
   display(temp);
 });
 
@@ -76,11 +73,4 @@ const displayAfterConvertion = (toggleTemp) => {
   const displayTemp = document.querySelector('#temperature');
   displayTemp.innerHTML = toggleTemp();
   weatherData.append(displayTemp);
-};
-
-
-const toggleTemp = (temp, btn) => {
-  // const availedTemp = document.querySelector('#temperature').value;
-  
-  return temp;
 };
