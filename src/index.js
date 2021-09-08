@@ -1,6 +1,7 @@
 const form = document.getElementById('input-form');
 const weatherData = document.getElementById('weather-data');
 let convert = false;
+let temp = 0;
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const location = document.getElementById('location').value;
@@ -29,45 +30,57 @@ const getWeather = async (realUrl) => {
 };
 
 const getTempAndOthers = (conditions) => {
-  let temp = (conditions.main.temp) - 273;
-  const skyline = conditions.weather[0]["description"];
+  temp = (conditions.main.temp) - 273;
+  let skyline = conditions.weather[0]["description"].split(" ")
+  skyline = skyline[skyline.length - 1];
   display(temp, skyline);
   return [temp, skyline];
 };
 
 const fetchGiphy = async (skyline) => {
-  const response = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=EE5yfxyw3zulUNXYsVkOAtVgrlzAqqJr&s=' + skyline);
+  const response = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=EE5yfxyw3zulUNXYsVkOAtVgrlzAqqJr&s='+'weather+'+skyline);
   const giphy = await response.json();
   console.log(giphy);
   const iframe = document.getElementById('giphyId');
   iframe.setAttribute('src', giphy.data.embed_url);
 };
 
-const display = (temp, skyline) => {
+const display = (temp, skyline, toggleTemp) => {
   const displayTemp = document.querySelector('#temperature');
   const displaySky = document.querySelector('#sky');
+  const btn = document.querySelector('.toggleBtn');
+  btn.innerHTML = "Convert";
   displayTemp.textContent = temp;
   displaySky.textContent = skyline;
-  weatherData.append(displayTemp, displaySky);
-  toggleTemp(temp, skyline);
+  weatherData.append(displayTemp, btn, displaySky);
+};
+
+const btn = document.querySelector('.toggleBtn');
+btn.innerHTML = "Convert";
+btn.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (convert == false) {
+    temp = ((temp) * 1.8) + 32;
+    convert = true;
+    console.log(convert);
+  } else {
+    temp = ((temp) - 32) / 1.8;
+    convert = false;
+    console.log(convert);
+  }
+  console.log(temp);
+  display(temp);
+});
+
+const displayAfterConvertion = (toggleTemp) => {
+  const displayTemp = document.querySelector('#temperature');
+  displayTemp.innerHTML = toggleTemp();
+  weatherData.append(displayTemp);
 };
 
 
-const toggleTemp = (temp, skyline, conditions) => {
-  const btn = document.querySelector('.toggleBtn');
-  btn.innerHTML = "Convert";
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    if(convert == false) {
-      temp = ((temp) * 1.8) + 32;
-      console.log(temp, 'from celsius to farenheit')
-      convert = true;
-    } else{
-      temp = (conditions.main.temp) - 273;
-      convert = false;
-    }
-    display(temp, skyline);
-  });
-  weatherData.append(btn);
+const toggleTemp = (temp, btn) => {
+  // const availedTemp = document.querySelector('#temperature').value;
   
+  return temp;
 };
