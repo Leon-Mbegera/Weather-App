@@ -4,4 +4,7 @@
 
 body {
   background-image: url(../src/images/sky.jpg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
