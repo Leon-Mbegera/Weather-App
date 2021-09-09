@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Weather app</title>
+</head>
+<body>
+  <form id="input-form">
+    <label for="location">location</label>
+    <input type="text" id="location" maxlength="30" required>
+    <input type="submit" value="see weather">
+  </form>
+  <div id="weather-data">
+    <p id="temperature"><span class="unit"></span></p>
+    <span><button type="submit" class="toggleBtn"></button></span>
+    <p id="sky"></p>
+  </div>
+  <div>
+    <iframe id="giphyId" class="giphy-embed" allowFullScreen></iframe>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
