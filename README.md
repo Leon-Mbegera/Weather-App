@@ -2,6 +2,8 @@
 
 - This is a weather forecast site, where user can search the weather condition for whichever place just by giving the location name.
 
+- [Live demo](https://leon-mbegera.github.io/Weather-App/)
+
 ## Built with
 - JavaScript
 - HTML & CSS
